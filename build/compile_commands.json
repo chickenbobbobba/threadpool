@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/samb/vscode/threadpool/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/threadpool.dir/main.cpp.o -c /home/samb/vscode/threadpool/main.cpp",
+  "file": "/home/samb/vscode/threadpool/main.cpp",
+  "output": "CMakeFiles/threadpool.dir/main.cpp.o"
+}
+]

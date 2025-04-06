@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/samb/vscode/threadpool/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
