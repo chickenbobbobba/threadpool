@@ -61,7 +61,6 @@ public:
             shutdownRequested = true;
         }
         conditionVariable.notify_all();
-        
         for (std::thread& worker : threads) {
             if (worker.joinable()) {
                 worker.join();
@@ -107,26 +106,20 @@ private:
         int taskCount = 0;
 
         for (;;) {
-            if (tasks.empty()) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(1));
-                continue;
-            }
-
             {
                 std::unique_lock<std::mutex> lock(mutex);
-                conditionVariable.wait(lock, [this] {
+                conditionVariable.wait(lock, [this]() {
                     return shutdownRequested || !tasks.empty();
                 });
+
+                if (shutdownRequested) {
+                    return;
+                }
                 
-                //std::cout << timeAvg << "\n";
                 if (timeAvg > 0) taskCount = timebuffer / timeAvg;
-                //std::cout << taskCount << "\n";
                 if (taskCount > maxTaskBufferSize) taskCount = maxTaskBufferSize;
-                //std::cout << taskCount << "\n";
                 if (taskCount < 1) taskCount = 1;
-                //std::cout << taskCount << "\n";
                 if (taskCount > tasks.size()) taskCount = tasks.size();
-                //std::cout << taskCount << "\n";
 
                 localTaskQueue.resize(taskCount);
 
